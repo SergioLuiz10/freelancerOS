@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: freelancer_db
+    environment:
+      POSTGRES_USER: freelancer
+      POSTGRES_PASSWORD: freelancer123
+      POSTGRES_DB: freelanceros
+  
+    ports:
+     - "5439:5432"
