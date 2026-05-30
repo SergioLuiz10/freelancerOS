@@ -15,5 +15,7 @@ class Projeto(Base):
     status= Column(String, nullable=False, default="em_andamento")  # em_andamento / concluido / cancelado
     data_criacao = Column(DateTime, default=datetime.utcnow)
     cliente_id = Column(Integer, ForeignKey("clientes.id"), nullable=False) # chave estrangeira para a tabela clientes
+    
+    usuario_id= Column(Integer, ForeignKey("usuarios.id"), nullable=False) # chave estrangeira para a tabela de usuários, indicando qual usuário criou o projeto
 
     cliente = relationship("Cliente", back_populates="projetos") # relacionamento com a tabela clientes, onde cada projeto pertence a um cliente
