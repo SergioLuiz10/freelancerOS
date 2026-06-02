@@ -12,6 +12,7 @@ class Lancamento(Base):
     descricao= Column(String, nullable=False)
     valor= Column(Numeric(10, 2), nullable=False) # Alterado para Numeric para suportar valores com centavos
     tipo= Column(String, nullable=False) # receita ou despesa
+    data_lancamento = Column(DateTime(timezone=True), nullable=False)  # quando o dinheiro entrou/saiu 
     data_criacao = Column(DateTime(timezone=True), server_default=func.now()) 
 
     projeto_id = Column(Integer, ForeignKey("projetos.id"), nullable=False) # chave estrangeira para a tabela de projetos, indicando a qual projeto o lançamento pertence
