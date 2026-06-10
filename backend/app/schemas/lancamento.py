@@ -33,5 +33,5 @@ class LancamentoResposta(BaseModel):
     usuario_id: int
   
    #  permite o Pydantic ler direto de um objeto SQLAlchemy
-  class Config:
+    class Config:
         from_attributes = True
