@@ -64,3 +64,10 @@ def obter_lancamento(lancamento_id: int, db: Session = Depends(get_db), usuario_
     if lancamento is None: #se n encontrar nenhum lancamento com o id vindo do lancamento_id lanca erro 
         raise HTTPException(status_code=404, detail="Lançamento não encontrado")
     return lancamento
+
+#
+@router.get("/", response_model=list[LancamentoResposta])
+def listar_lancamentos(db: Session = Depends(get_db), usuario_atual:Usuario = Depends(obter_usuario_atual_endpoint)):
+    lancamento = db.query(Lancamento).filter(Lancamento.usuario_id==usuario_atual.id).all()
+   
+    return lancamento
