@@ -71,3 +71,13 @@ def listar_lancamentos(db: Session = Depends(get_db), usuario_atual:Usuario = De
     lancamento = db.query(Lancamento).filter(Lancamento.usuario_id==usuario_atual.id).all()
    
     return lancamento
+
+
+@router.delete("/{lancamento_id}", response_model=LancamentoResposta)
+def deletar_lancamento(lancamento_id: int, db: Session = Depends(get_db), usuario_atual: Usuario = Depends(obter_usuario_atual_endpoint)):
+    lancamento = db.query(Lancamento).filter(Lancamento.id == lancamento_id, Lancamento.usuario_id == usuario_atual.id).first() # filtra só os lançamentos onde o id da tabela é igual ao id que veio pela URL e pertence ao usuário autenticado
+    if lancamento is None: #se n encontrar nenhum lancamento com o id vindo do lancamento_id lanca erro
+        raise HTTPException(status_code=404, detail="Lançamento não encontrado")
+    db.delete(lancamento) #deleta o lançamento encontrado
+    db.commit() #confirma a deleção no banco de dados
+    return lancamento #retorna o lançamento deletado
